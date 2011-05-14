@@ -1,0 +1,153 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="WindowsPhoneApplication1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:ccc="clr-namespace:WindowsPhoneApplication1.Converters"
+    
+    
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <phone:PhoneApplicationPage.Resources>
+        <ccc:TestConverter x:Key="testC" />
+
+        <!-- The template for the list header. This will scroll as a part of the list. -->
+        <DataTemplate x:Key="citiesListHeader">
+            <Border Background="Purple">
+                <!--<TextBlock Text="Cities Header" />-->
+            </Border>
+        </DataTemplate>
+        <DataTemplate x:Key="citiesListFooter">
+            <Border Background="Green">
+                <!--<TextBlock Text="Cities Footer" />-->
+            </Border>
+        </DataTemplate>
+
+        <!-- The template for city items -->
+        <DataTemplate x:Key="citiesItemTemplate" >
+
+            <!--<TextBlock Text="{Binding Name}" FontSize="26"  Margin="12,-12,12,6"/>-->
+            <Image Source="{Binding Converter={StaticResource testC}}" Width="80" Height="80" />
+
+            <!--<TextBlock Text="{Binding Country}"  Foreground="GreenYellow"/>
+                <TextBlock Text="{Binding Language}" Foreground="Orange"  />-->
+
+        </DataTemplate>
+
+
+        <!-- The group header template, for groups in the main list -->
+        <DataTemplate x:Key="groupHeaderTemplate">
+            <Border Background="YellowGreen" Margin="6">
+                <TextBlock Text="{Binding Title}" FontSize="40" Foreground="Black"/>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="groupItemTemplate" >
+            <Border Background="YellowGreen" Margin="6">
+                <TextBlock Text="{Binding Title}" FontSize="40" Foreground="Black"/>
+            </Border>
+        </DataTemplate>
+
+
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+
+            <ListBox x:Name="lstBox1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Border Background="Gray">
+                                <TextBlock Text="{Binding Name}" FontSize="50"  />
+                            </Border>
+                            <ListBox ItemsSource="{Binding Pictures}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <toolkit:WrapPanel IsItemsHost="True" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding Converter={StaticResource testC}}" Width="80" Height="80" Margin="2" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                           
+                        </StackPanel>
+                       
+                       
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <!--<ListBox x:Name="lstBox1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <toolkit:WrapPanel IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>                        
+                        <ContentControl Content="{Binding Name}"  />                       
+                      
+                    </DataTemplate>
+                </ListBox.ItemTemplate>                
+            </ListBox>-->
+
+            <!--<toolkit:LongListSelector x:Name="citiesListGropus" Background="Transparent" 
+                 ItemTemplate="{StaticResource citiesItemTemplate}"
+                    ListHeaderTemplate="{StaticResource citiesListHeader}" 
+						ListFooterTemplate="{StaticResource citiesListFooter}"
+					GroupHeaderTemplate="{StaticResource groupHeaderTemplate}"
+                    GroupItemTemplate="{StaticResource groupItemTemplate}" IsBouncy="True">
+                
+              
+                <toolkit:LongListSelector.GroupItemsPanel>
+                    
+                    <ItemsPanelTemplate>
+                        <toolkit:WrapPanel/>
+                    </ItemsPanelTemplate>
+                </toolkit:LongListSelector.GroupItemsPanel>
+
+
+            </toolkit:LongListSelector>-->
+
+        </Grid>
+    </Grid>
+
+    <!--Sample code showing usage of ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+
+</phone:PhoneApplicationPage>

@@ -48,8 +48,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Caliburn.Micro, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Caliburn.Micro.1.0.0\lib\SL40-wp\Caliburn.Micro.dll</HintPath>
+    <Reference Include="Caliburn.Micro, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Users\korniien\Downloads\caliburnmicro-ead206db3f82\caliburnmicro-ead206db3f82\caliburnmicro_ead206db3f82\src\Caliburn.Micro.WP7\obj\Debug\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Extensions">
+      <HintPath>..\..\..\Users\korniien\Downloads\caliburnmicro-ead206db3f82\caliburnmicro-ead206db3f82\caliburnmicro_ead206db3f82\src\Caliburn.Micro.WP7.Extensions\obj\Debug\Caliburn.Micro.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Coding4Fun.Phone.Controls">
       <HintPath>..\packages\Coding4Fun.Phone.Controls.1.4.1\lib\Coding4Fun.Phone.Controls.dll</HintPath>

@@ -22,10 +22,9 @@ namespace Picaser
         /// Constructor for the Application object.
         /// </summary>
         public App()
-        {
-
+        {            
             // Standard Silverlight initialization
-            InitializeComponent();
+            InitializeComponent();           
         }
 
     }

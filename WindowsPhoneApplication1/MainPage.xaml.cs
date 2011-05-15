@@ -47,10 +47,13 @@ namespace WindowsPhoneApplication1
             var lisbox = sender as ListBox;
             var picure = lisbox.SelectedItem as Picture;
 
+
+            var account = "";
+            var password = "";
             GooglePicasaService service = new GooglePicasaService();
-            service.Login("asdasdadd", "asdasd", (authResult) =>
+            service.Login(account, password, (authResult) =>
             {
-                var url = "https://picasaweb.google.com/data/feed/api/user/k123y/albumid/5606646906678744561";
+                
 
                 WebClient client = new WebClient();
 
@@ -62,14 +65,18 @@ namespace WindowsPhoneApplication1
 
 
                 Stream picStream = picure.GetImage();
-                byte[] fileContent = new byte[picStream.Length];
-                int bytesRead = picStream.Read(fileContent, 0, fileContent.Length);
 
-                WebClient wc = new WebClient();
-                wc.OpenWriteCompleted += new OpenWriteCompletedEventHandler(client_OpenWriteCompleted);
-               
-                wc.OpenWriteAsync(new Uri(url), null, new object[] { fileContent, bytesRead });
-               
+                UploadFile(client, picStream);
+
+                //client.OpenWriteCompleted += (sender, e) =>
+                //{
+                //    PushData(data, e.Result);
+                //    e.Result.Close();
+                //    data.Close();
+                //};
+                //client.OpenWriteAsync(ub.Uri);
+
+            
 
 
 
@@ -88,49 +95,38 @@ namespace WindowsPhoneApplication1
             });
         }
 
-
-
-        void client_OpenWriteCompleted(object sender, OpenWriteCompletedEventArgs e)
+        private void UploadFile(WebClient c, Stream data)
         {
-            if (e.Error == null)
+            var url = "https://picasaweb.google.com/data/feed/api/user/ssssssssss/albumid/5606646906678744561";
+
+            //UriBuilder ub = new UriBuilder("YOUR URL HERE");
+            ////ub.Query = string.Format("name={0}", fileName);
+                        
+            c.OpenWriteCompleted += (sender, e) =>
             {
-                object[] objArr = e.UserState as object[];
-                byte[] fileContent = objArr[0] as byte[];
-                int bytesRead = Convert.ToInt32(objArr[1]);
-                Stream outputStream = e.Result;
-                outputStream.Write(fileContent, 0, bytesRead);
-                outputStream.Close();
+                PushData(data, e.Result);
+                e.Result.Close();
+                data.Close();
+            };
+            c.OpenWriteAsync(new Uri(url));
+        }
+
+
+        private void PushData(Stream input, Stream output)
+        {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+
+            while ((bytesRead = input.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                output.Write(buffer, 0, bytesRead);
             }
-             
         }
 
 
 
 
-        byte[] ConvertToByte(Stream source)
-        {
-
-            MemoryStream memStream = new MemoryStream();
-
-            byte[] buffer = new byte[1024];
-
-            int bytes;
-
-
-
-            while ((bytes = source.Read(buffer, 0, buffer.Length)) > 0)
-            {
-
-                memStream.Write(buffer, 0, buffer.Length);
-
-            }
-
-
-
-            return memStream.ToArray();
-
-        }
-
+    
 
 
 

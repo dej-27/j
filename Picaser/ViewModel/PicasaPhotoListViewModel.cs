@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Picaser.Common;
 using Caliburn.Micro;
 using System.Collections.Generic;
+using Picaser.Helpers;
 
 namespace Picaser.ViewModel
 {
@@ -30,8 +31,10 @@ namespace Picaser.ViewModel
         {
             base.OnActivate();
 
+            //set album title
             NotifyOfPropertyChange(() => AlbumTitle);
-
+            
+            //load photos by albumId
             _photoService.GetAlbumPhotos(AlbumId, (photos) =>
             {
                 PhotoList = photos;
@@ -40,7 +43,10 @@ namespace Picaser.ViewModel
 
         }
 
-
+        public void UploadPhoto()
+        {
+            _navigationService.Navigate(UrlHelper.PhonePhotoList());
+        }
 
         public string AlbumId { get; set; }
         public string AlbumTitle { get; set; }

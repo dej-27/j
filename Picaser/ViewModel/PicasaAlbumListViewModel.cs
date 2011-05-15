@@ -19,37 +19,32 @@ using Picaser.Helpers;
 
 namespace Picaser.ViewModel
 {
-    public class PicasaAlbumListViewModel : PropertyChangedBase, IHandle<AppEvents.PicasaAlbumCreated>
+    public class PicasaAlbumListViewModel : Screen
     {
         readonly IPhotoService<PicasaAlbum, PicasaMediaGroup> _photoService;
-        readonly INavigationService _navigationService;
-        readonly IEventAggregator _eventAggregaror;
+        readonly INavigationService _navigationService;       
+
+        public PicasaAlbum SelectedAlbum { get; set; }
+        public List<PicasaAlbum> AlbumList { get; set; }
 
         public PicasaAlbumListViewModel(IPhotoService<PicasaAlbum, PicasaMediaGroup> photoService,
-                                        INavigationService navigationService,
-                                        IEventAggregator eventAggregaror)
+                                        INavigationService navigationService)
         {
             _photoService = photoService;
-            _navigationService = navigationService;
-            _eventAggregaror = eventAggregaror;
-
-
-            _eventAggregaror.Subscribe(this);
-
-            UpdateViewModel();            
+            _navigationService = navigationService;                      
         }
 
-        public void UpdateViewModel()
+        protected override void OnActivate()
         {
+            base.OnActivate();
+
+            //Load picasa albums
             _photoService.GetAlbums((albums) =>
             {
                 AlbumList = albums;
                 NotifyOfPropertyChange(() => AlbumList);
             });
-        }
-
-        public PicasaAlbum SelectedAlbum { get; set; }
-        public List<PicasaAlbum> AlbumList { get; set; }
+        }        
 
         public void DeleteAlbum(PicasaAlbum album)
         {
@@ -71,8 +66,11 @@ namespace Picaser.ViewModel
 
         public void OnSelectAlbum(PicasaAlbumListViewModel model)
         {
-            PicasaAlbum album = model.SelectedAlbum;
-            _navigationService.Navigate(UrlHelper.PicasaPhotoList(album.Id, album.Title));
+            if (model.SelectedAlbum != null)
+            {
+                PicasaAlbum album = model.SelectedAlbum;
+                _navigationService.Navigate(UrlHelper.PicasaPhotoList(album.Id, album.Title));
+            }
         }
         
         /// <summary>
@@ -83,13 +81,8 @@ namespace Picaser.ViewModel
             _navigationService.Navigate( UrlHelper.PicasaAlbumCreate() );
         }
 
-        /// <summary>
-        /// New album event listener 
-        /// </summary>
-        /// <param name="message">New album event object</param>
-        public void Handle(AppEvents.PicasaAlbumCreated message)
-        {
-            UpdateViewModel(); 
-        }
+
+
+        
     }
 }

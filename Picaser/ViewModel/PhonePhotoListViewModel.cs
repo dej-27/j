@@ -8,14 +8,32 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Picaser.Common;
+using System.Collections.Generic;
+using Caliburn.Micro;
 
 namespace Picaser.ViewModel
 {
-    public class PhonePhotoListViewModel
+    public class PhonePhotoListViewModel : Screen
     {
-        public PhonePhotoListViewModel()
-        {
+        readonly IPhoneService<PhoneAlbum> _phoneService;
+        public List<PhoneAlbum> AlbumList { get; set; }
 
+        public PhonePhotoListViewModel(IPhoneService<PhoneAlbum> phoneService)
+        {
+            _phoneService = phoneService;
+        }
+        
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+
+            //get phone photos
+            _phoneService.GetAlbums((albums) =>
+            {
+                AlbumList = albums;
+                NotifyOfPropertyChange(() => AlbumList);
+            });
         }
     }
 }

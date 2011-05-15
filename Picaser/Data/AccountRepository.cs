@@ -14,20 +14,20 @@ using Picaser.Common;
 namespace Picaser.Data
 {
     public class AccountRepository : IAccountRepository
-    {
-        private List<PicasaAccount> _accounts;
+    {       
 
         public AccountRepository()
         {
-            _accounts = new List<PicasaAccount>();            
-            _accounts.Add(new PicasaAccount() { User = "vasya.pupkin82xs12@googlemail.com", Password = "vasya.pupkin123" });
-            _accounts.Add(new PicasaAccount() { User = "vasya.pupkin11mx98@googlemail.com", Password = "vasya.pupkin123" });
-            _accounts.Add(new PicasaAccount() { User = "vasya.pupkin42n11@googlemail.com", Password = "vasya.pupkin123" });
+           
         }
 
-        public List<PicasaAccount> GetAllAccounts()
+        public void GetAllAccounts(Action<List<PicasaAccount>> callback)
         {
-            return _accounts;
+            var accounts = new List<PicasaAccount>();
+            accounts.Add(new PicasaAccount() { User = "vasya.pupkin82xs12@googlemail.com", Password = "vasya.pupkin123" });
+            accounts.Add(new PicasaAccount() { User = "vasya.pupkin11mx98@googlemail.com", Password = "vasya.pupkin123" });
+            accounts.Add(new PicasaAccount() { User = "vasya.pupkin42n11@googlemail.com", Password = "vasya.pupkin123" });
+            callback(accounts);
         }
 
         public void Add(PicasaAccount account)
@@ -44,5 +44,7 @@ namespace Picaser.Data
         {
             MessageBox.Show("AccountRepository Update");            
         }
+
+      
     }
 }

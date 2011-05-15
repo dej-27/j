@@ -34,9 +34,6 @@ namespace PhotoSharing.ViewModel
             //Data.AccountRepository repo = new Data.AccountRepository();
             //Data.Entities.Account account = repo.GetAllAccounts().First();
 
-           
-
-
         }
 
         public ObservableCollection<Account> Accounts

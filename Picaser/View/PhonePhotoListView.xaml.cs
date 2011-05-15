@@ -13,16 +13,11 @@ using Microsoft.Phone.Controls;
 
 namespace Picaser.View
 {
-    public partial class PicasaPhotoListView : PhoneApplicationPage
+    public partial class PhonePhotoListView : PhoneApplicationPage
     {
-        public PicasaPhotoListView()
+        public PhonePhotoListView()
         {
             InitializeComponent();
-        }
-
-        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
-        {
-            base.OnNavigatedFrom(e);
         }
     }
 }

@@ -46,5 +46,11 @@ namespace Picaser.Helpers
             string url = String.Format("/View/PicasaPhotoListView.xaml?AlbumId={0}&AlbumTitle={1}", albumId, albumTitle);
             return new Uri(url, UriKind.Relative);
         }
+
+
+        public static Uri PhonePhotoList()
+        {
+            return new Uri("/View/PhonePhotoListView.xaml", UriKind.Relative);   
+        }
     }
 }

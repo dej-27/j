@@ -16,41 +16,37 @@ using Picaser.Helpers;
 
 namespace Picaser.ViewModel
 {
-    public class AccountListViewModel : PropertyChangedBase
+    public class AccountListViewModel : Screen
     {
-        readonly IAccountRepository _repository;
+        readonly IAccountRepository _accountRepository;
         readonly INavigationService _navigationService;
         readonly IPhotoService<PicasaAlbum, PicasaMediaGroup> _photoService;
 
-        public AccountListViewModel(IAccountRepository repository,
+        public PicasaAccount SelectedAccount { get; set; }
+        public List<PicasaAccount> AccountList { get; set; }
+
+        public AccountListViewModel(IAccountRepository accountRepository,
                                     INavigationService navigationService,
                                     IPhotoService<PicasaAlbum, PicasaMediaGroup> photoService)
         {
-            _repository = repository;
+            _accountRepository = accountRepository;
             _navigationService = navigationService;
-            _photoService = photoService;
-
-            AccountList = _repository.GetAllAccounts();
-            NotifyOfPropertyChange(() => AccountList);
+            _photoService = photoService;            
         }
 
-        private PicasaAccount _selectedAccount;
-        public PicasaAccount SelectedAccount
+        protected override void OnActivate()
         {
-            get
-            {
-                return _selectedAccount;
-            }
-            set
-            {
-                _selectedAccount = value;
-                NotifyOfPropertyChange(() => SelectedAccount);
-            }
+            base.OnActivate();
+
+            _accountRepository.GetAllAccounts((accounts) =>
+           {
+               AccountList = accounts;
+               NotifyOfPropertyChange(() => AccountList);
+           });
+
         }
-
-
-        public List<PicasaAccount> AccountList { get; set; }    
         
+
         /// <summary>
         /// Called when an account selected
         /// </summary>
@@ -88,16 +84,14 @@ namespace Picaser.ViewModel
         /// Navigate to picasa albums list
         /// </summary>
         public void Navigation_PicasaAlbumListView(PicasaAccount account)
-        {
-            //TODO: error handler. Handle auth error
-            _photoService.Login(account.User, account.Password,
-                (auth) => _navigationService.Navigate( UrlHelper.PicasaAlbumList() ));
-            
+        {            
+            if (account != null)
+            {
+                //TODO: error handler. Handle auth error
+                _photoService.Login(account.User, account.Password,
+                (auth) => _navigationService.Navigate(UrlHelper.PicasaAlbumList()));
+            }
         }
-
-
-
-
 
     }
 }

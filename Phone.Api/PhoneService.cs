@@ -15,9 +15,9 @@ using Picaser.Common;
 
 namespace Phone.Api
 {
-    public class PhoneService
+    public class PhoneService : IPhoneService<PhoneAlbum>
     {
-        public List<PhoneAlbum> GetPhoneAlbums()
+        public void GetAlbums(Action<List<PhoneAlbum>> result)
         {
             MediaLibrary lib = new MediaLibrary();
             var albums = (from p in lib.Pictures
@@ -27,8 +27,9 @@ namespace Phone.Api
                           {
                               Name = album.Key.Name,
                               Pictures = album.Key.Pictures.ToList()
+            
                           });
-            return albums.ToList();
+            result(albums.ToList());            
         }
     }
 }

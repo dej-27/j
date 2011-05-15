@@ -8,11 +8,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace Picaser.Common
 {
-    public interface IPhoneService
+    public interface IPhoneService<ALBUM>
     {
-
+        void GetAlbums(Action<List<ALBUM>> result);
     }
 }

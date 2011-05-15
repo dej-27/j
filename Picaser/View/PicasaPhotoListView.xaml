@@ -15,8 +15,8 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True">
-
+    shell:SystemTray.IsVisible="True">    
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -47,15 +47,18 @@
         </ListBox>
     </Grid>
 
+    <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <!--<caliburn:AppBarButton IconUri="/Images/appbar.add.rest.png" Text="Add"  />-->           
-
-            <shell:ApplicationBar.MenuItems>                
-                <caliburn:AppBarMenuItem Text="Загрузить фото с телефона"  />
+            <!--<shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>-->
+            
+            <shell:ApplicationBar.MenuItems>
+                <!--<shell:ApplicationBarMenuItem Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem Text="MenuItem 2"/>-->
+                <caliburn:AppBarMenuItem Text="Загрузить фото с телефона" Message="UploadPhoto" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
-
     </phone:PhoneApplicationPage.ApplicationBar>
 
 

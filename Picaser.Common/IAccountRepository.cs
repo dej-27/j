@@ -15,7 +15,7 @@ namespace Picaser.Common
 {
     public interface IAccountRepository
     {
-        List<PicasaAccount> GetAllAccounts();
+        void GetAllAccounts(Action<List<PicasaAccount>> callback);
         void Add(PicasaAccount account);
         void Delete(PicasaAccount account);
         void Update(PicasaAccount account);

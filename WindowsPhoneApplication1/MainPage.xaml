@@ -7,8 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    xmlns:ccc="clr-namespace:WindowsPhoneApplication1.Converters"
-    
+    xmlns:ccc="clr-namespace:WindowsPhoneApplication1.Converters"   
     
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -17,67 +16,10 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
-    <toolkit:TransitionService.NavigationInTransition>
-        <toolkit:NavigationInTransition>
-            <toolkit:NavigationInTransition.Backward>
-                <toolkit:TurnstileTransition Mode="BackwardIn"/>
-            </toolkit:NavigationInTransition.Backward>
-            <toolkit:NavigationInTransition.Forward>
-                <toolkit:TurnstileTransition Mode="ForwardIn"/>
-            </toolkit:NavigationInTransition.Forward>
-        </toolkit:NavigationInTransition>
-    </toolkit:TransitionService.NavigationInTransition>
-    <toolkit:TransitionService.NavigationOutTransition>
-        <toolkit:NavigationOutTransition>
-            <toolkit:NavigationOutTransition.Backward>
-                <toolkit:TurnstileTransition Mode="BackwardOut"/>
-            </toolkit:NavigationOutTransition.Backward>
-            <toolkit:NavigationOutTransition.Forward>
-                <toolkit:TurnstileTransition Mode="ForwardOut"/>
-            </toolkit:NavigationOutTransition.Forward>
-        </toolkit:NavigationOutTransition>
-    </toolkit:TransitionService.NavigationOutTransition>
+    
     
     <phone:PhoneApplicationPage.Resources>
-        <ccc:TestConverter x:Key="testC" />
-
-        <!-- The template for the list header. This will scroll as a part of the list. -->
-        <DataTemplate x:Key="citiesListHeader">
-            <Border Background="Purple">
-                <!--<TextBlock Text="Cities Header" />-->
-            </Border>
-        </DataTemplate>
-        <DataTemplate x:Key="citiesListFooter">
-            <Border Background="Green">
-                <!--<TextBlock Text="Cities Footer" />-->
-            </Border>
-        </DataTemplate>
-
-        <!-- The template for city items -->
-        <DataTemplate x:Key="citiesItemTemplate" >
-
-            <!--<TextBlock Text="{Binding Name}" FontSize="26"  Margin="12,-12,12,6"/>-->
-            <Image Source="{Binding Converter={StaticResource testC}}" Width="80" Height="80" />
-
-            <!--<TextBlock Text="{Binding Country}"  Foreground="GreenYellow"/>
-                <TextBlock Text="{Binding Language}" Foreground="Orange"  />-->
-
-        </DataTemplate>
-
-
-        <!-- The group header template, for groups in the main list -->
-        <DataTemplate x:Key="groupHeaderTemplate">
-            <Border Background="YellowGreen" Margin="6">
-                <TextBlock Text="{Binding Title}" FontSize="40" Foreground="Black"/>
-            </Border>
-        </DataTemplate>
-
-        <DataTemplate x:Key="groupItemTemplate" >
-            <Border Background="YellowGreen" Margin="6">
-                <TextBlock Text="{Binding Title}" FontSize="40" Foreground="Black"/>
-            </Border>
-        </DataTemplate>
-
+        <ccc:TestConverter x:Key="testC" />   
 
     </phone:PhoneApplicationPage.Resources>
 
@@ -104,7 +46,9 @@
                             <Border Background="Gray">
                                 <TextBlock Text="{Binding Name}" FontSize="50"  />
                             </Border>
-                            <ListBox ItemsSource="{Binding Pictures}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                            
+                            
+                            <ListBox ItemsSource="{Binding Pictures}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBox_SelectionChanged">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <toolkit:WrapPanel IsItemsHost="True" />
@@ -123,39 +67,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-
-            <!--<ListBox x:Name="lstBox1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <toolkit:WrapPanel IsItemsHost="True" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>                        
-                        <ContentControl Content="{Binding Name}"  />                       
-                      
-                    </DataTemplate>
-                </ListBox.ItemTemplate>                
-            </ListBox>-->
-
-            <!--<toolkit:LongListSelector x:Name="citiesListGropus" Background="Transparent" 
-                 ItemTemplate="{StaticResource citiesItemTemplate}"
-                    ListHeaderTemplate="{StaticResource citiesListHeader}" 
-						ListFooterTemplate="{StaticResource citiesListFooter}"
-					GroupHeaderTemplate="{StaticResource groupHeaderTemplate}"
-                    GroupItemTemplate="{StaticResource groupItemTemplate}" IsBouncy="True">
-                
-              
-                <toolkit:LongListSelector.GroupItemsPanel>
-                    
-                    <ItemsPanelTemplate>
-                        <toolkit:WrapPanel/>
-                    </ItemsPanelTemplate>
-                </toolkit:LongListSelector.GroupItemsPanel>
-
-
-            </toolkit:LongListSelector>-->
-
+        
         </Grid>
     </Grid>
 

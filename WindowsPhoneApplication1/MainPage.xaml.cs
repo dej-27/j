@@ -13,30 +13,13 @@ using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Media;
 using System.Windows.Media.Imaging;
 using System.IO;
+using Picasa.Api;
+using System.Windows.Resources;
+using Microsoft.Phone;
+using System.Text;
 
 namespace WindowsPhoneApplication1
 {
-    public class City
-    {
-        public string Name
-        {
-            get;
-            set;
-        }
-
-        public string Country
-        {
-            get;
-            set;
-        }
-
-        public string Language
-        {
-            get;
-            set;
-        }
-    }
-
 
 
     public partial class MainPage : PhoneApplicationPage
@@ -48,84 +31,108 @@ namespace WindowsPhoneApplication1
 
             MediaLibrary lib = new MediaLibrary();
 
-            //List<PhonePicture> pics = (from p in lib.Pictures
-            //                           select new PhonePicture()
-            //                           {
-            //                               Title = p.Name,
-            //                               Image = GetImage(p.GetImage()),
-            //                               Thumbnail = GetImage(p.GetThumbnail())
-            //                           }).ToList();
-
-
-            //LongList.ItemsSource = pics;
-
-
-            List<City> source = new List<City>();
-            source.Add(new City() { Name = "Madrid", Country = "ES", Language = "Spanish" });
-            source.Add(new City() { Name = "Barcelona", Country = "ES", Language = "Spanish" });
-            source.Add(new City() { Name = "Mallorca", Country = "ES", Language = "Spanish" });
-            source.Add(new City() { Name = "Las Vegas", Country = "US", Language = "English" });
-            source.Add(new City() { Name = "Dalas", Country = "US", Language = "English" });
-            source.Add(new City() { Name = "New York", Country = "US", Language = "English" });
-            source.Add(new City() { Name = "London", Country = "UK", Language = "English" });
-            source.Add(new City() { Name = "Mexico", Country = "MX", Language = "Spanish" });
-            source.Add(new City() { Name = "Milan", Country = "IT", Language = "Italian" });
-            source.Add(new City() { Name = "Roma", Country = "IT", Language = "Italian" });
-            source.Add(new City() { Name = "Paris", Country = "FR", Language = "French" });
-
-
-            //citiesListGropus.ItemsSource = from city in source
-            //                       group city by city.Country into c
-            //                       orderby c.Key
-            //                       select new Group<City>(c.Key, c);
-
-
             var groups = (from p in lib.Pictures
                           group p by p.Album into album
                           orderby album.Key.Name
                           select new PhoneAlbum
                           {
-                              Name = album.Key.Name,                              
+                              Name = album.Key.Name,
                               Pictures = album.Key.Pictures.ToList()
                           });
-
-            //List<object> objs = new List<object>();
-            //foreach (var item in groups)
-            //{
-            //    objs.Add(item.Album);                
-            //    objs.AddRange(item.Pics.ToArray());
-            //}
-
-
-            //MessageBox.Show(groups[0].Album.Name);
             lstBox1.ItemsSource = groups;
-
-            //citiesListGropus.ItemsSource = from g in groups                                            
-            //                               select new Group<Picture>(g.Album, g.Pics);
-
-            //var a = from p in lib.Pictures
-            //        from a in p.Album
-
-            //        select new Group<PhonePicture>( pp.Key, pp.
-
-
-
-
-
-
-            //citiesListGropus.ItemsSource = from pic in lib.Pictures
-            //                               group pic by pic.Album.Name into a
-            //                               orderby a.Key
-            //                               select new Group<PhonePicture>(a.Key, a);
         }
 
-
-
-        public BitmapImage GetImage(Stream stream)
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BitmapImage image = new BitmapImage();
-            image.SetSource(stream);
-            return image;
+            var lisbox = sender as ListBox;
+            var picure = lisbox.SelectedItem as Picture;
+
+            GooglePicasaService service = new GooglePicasaService();
+            service.Login("asdasdadd", "asdasd", (authResult) =>
+            {
+                var url = "https://picasaweb.google.com/data/feed/api/user/k123y/albumid/5606646906678744561";
+
+                WebClient client = new WebClient();
+
+                client.Headers["Authorization"] = String.Format("GoogleLogin auth={0}", authResult);
+                client.Headers["Content-Type"] = "image/jpeg";
+                client.Headers["Slug"] = picure.Name;
+
+                //StreamReader sr = new StreamReader(picure.GetImage());
+
+
+                Stream picStream = picure.GetImage();
+                byte[] fileContent = new byte[picStream.Length];
+                int bytesRead = picStream.Read(fileContent, 0, fileContent.Length);
+
+                WebClient wc = new WebClient();
+                wc.OpenWriteCompleted += new OpenWriteCompletedEventHandler(client_OpenWriteCompleted);
+               
+                wc.OpenWriteAsync(new Uri(url), null, new object[] { fileContent, bytesRead });
+               
+
+
+
+                //StreamReader _data = new StreamReader(picStream);
+                //int bytesRead = _data.Read(fileContent, 0, fileContent.Length);
+
+                //BinaryReader binary = new BinaryReader(picStream);
+                //Read bytes from the BinaryReader and put them into a byte array.
+                //Byte[] imgB = binary.ReadBytes((int)picStream.Length);
+
+
+
+                //client.OpenWriteCompleted += new OpenWriteCompletedEventHandler(client_OpenWriteCompleted);
+                //client.OpenWriteAsync(new Uri(url), "POST", imgB);
+
+            });
         }
+
+
+
+        void client_OpenWriteCompleted(object sender, OpenWriteCompletedEventArgs e)
+        {
+            if (e.Error == null)
+            {
+                object[] objArr = e.UserState as object[];
+                byte[] fileContent = objArr[0] as byte[];
+                int bytesRead = Convert.ToInt32(objArr[1]);
+                Stream outputStream = e.Result;
+                outputStream.Write(fileContent, 0, bytesRead);
+                outputStream.Close();
+            }
+             
+        }
+
+
+
+
+        byte[] ConvertToByte(Stream source)
+        {
+
+            MemoryStream memStream = new MemoryStream();
+
+            byte[] buffer = new byte[1024];
+
+            int bytes;
+
+
+
+            while ((bytes = source.Read(buffer, 0, buffer.Length)) > 0)
+            {
+
+                memStream.Write(buffer, 0, buffer.Length);
+
+            }
+
+
+
+            return memStream.ToArray();
+
+        }
+
+
+
+
     }
 }

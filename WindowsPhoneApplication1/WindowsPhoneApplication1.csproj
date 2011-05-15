@@ -117,7 +117,16 @@
     </Content>
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Picasa.Api\Picasa.Api.csproj">
+      <Project>{5FCA765F-2767-481D-BF1D-0A704AE074DA}</Project>
+      <Name>Picasa.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Picaser.Common\Picaser.Common.csproj">
+      <Project>{93432EF1-B0D7-4205-8F67-55EABB08D1A5}</Project>
+      <Name>Picaser.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

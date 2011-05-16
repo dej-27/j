@@ -17,6 +17,7 @@ using Picasa.Api;
 using System.Windows.Resources;
 using Microsoft.Phone;
 using System.Text;
+using System.Diagnostics;
 
 namespace WindowsPhoneApplication1
 {
@@ -40,6 +41,8 @@ namespace WindowsPhoneApplication1
                               Pictures = album.Key.Pictures.ToList()
                           });
             lstBox1.ItemsSource = groups;
+            
+            
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -48,60 +51,38 @@ namespace WindowsPhoneApplication1
             var picure = lisbox.SelectedItem as Picture;
 
 
-            var account = "";
-            var password = "";
+            var account = "vasya.pupkin82xs12@googlemail.com";
+            var password = "vasya.pupkin123";
             GooglePicasaService service = new GooglePicasaService();
             service.Login(account, password, (authResult) =>
             {
-                
 
                 WebClient client = new WebClient();
+
+
+                //client.UploadProgressChanged += new UploadProgressChangedEventHandler(client_UploadProgressChanged);
 
                 client.Headers["Authorization"] = String.Format("GoogleLogin auth={0}", authResult);
                 client.Headers["Content-Type"] = "image/jpeg";
                 client.Headers["Slug"] = picure.Name;
 
-                //StreamReader sr = new StreamReader(picure.GetImage());
-
 
                 Stream picStream = picure.GetImage();
 
-                UploadFile(client, picStream);
+                UploadFile(client, picStream, account);
 
-                //client.OpenWriteCompleted += (sender, e) =>
-                //{
-                //    PushData(data, e.Result);
-                //    e.Result.Close();
-                //    data.Close();
-                //};
-                //client.OpenWriteAsync(ub.Uri);
-
-            
-
-
-
-                //StreamReader _data = new StreamReader(picStream);
-                //int bytesRead = _data.Read(fileContent, 0, fileContent.Length);
-
-                //BinaryReader binary = new BinaryReader(picStream);
-                //Read bytes from the BinaryReader and put them into a byte array.
-                //Byte[] imgB = binary.ReadBytes((int)picStream.Length);
-
-
-
-                //client.OpenWriteCompleted += new OpenWriteCompletedEventHandler(client_OpenWriteCompleted);
-                //client.OpenWriteAsync(new Uri(url), "POST", imgB);
 
             });
         }
 
-        private void UploadFile(WebClient c, Stream data)
-        {
-            var url = "https://picasaweb.google.com/data/feed/api/user/ssssssssss/albumid/5606646906678744561";
+    
 
-            //UriBuilder ub = new UriBuilder("YOUR URL HERE");
-            ////ub.Query = string.Format("name={0}", fileName);
-                        
+        private void UploadFile(WebClient c, Stream data, string account)
+        {
+            Debug.WriteLine("Upload file");
+
+            var url = String.Format("https://picasaweb.google.com/data/feed/api/user/{0}/albumid/5606723136600202209", account);
+
             c.OpenWriteCompleted += (sender, e) =>
             {
                 PushData(data, e.Result);
@@ -117,16 +98,23 @@ namespace WindowsPhoneApplication1
             byte[] buffer = new byte[4096];
             int bytesRead;
 
+            int total = 0;         
             while ((bytesRead = input.Read(buffer, 0, buffer.Length)) != 0)
             {
-                output.Write(buffer, 0, bytesRead);
+                output.Write(buffer, 0, bytesRead);               
+                total += 4096 * 100 / (int)input.Length;
+
+                Debug.WriteLine(total);
             }
+
+            if (total < 100) total = 100;
+            Debug.WriteLine(total);
         }
 
 
 
 
-    
+
 
 
 

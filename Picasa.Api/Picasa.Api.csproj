@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Atom\AtomLink.cs" />
     <Compile Include="GooglePicasaService.cs" />
+    <Compile Include="GooglePicasaUrlHelper.cs" />
     <Compile Include="PicasaVisibility.cs" />
     <Compile Include="PicasaService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

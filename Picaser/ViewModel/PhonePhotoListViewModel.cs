@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Picaser.Common;
 using System.Collections.Generic;
 using Caliburn.Micro;
+using Microsoft.Xna.Framework.Media;
 
 namespace Picaser.ViewModel
 {
@@ -18,6 +19,8 @@ namespace Picaser.ViewModel
     {
         readonly IPhoneService<PhoneAlbum> _phoneService;
         public List<PhoneAlbum> AlbumList { get; set; }
+        public Picture SelectedPicture { get; set; }
+        public string AlbumId { get; set; }
 
         public PhonePhotoListViewModel(IPhoneService<PhoneAlbum> phoneService)
         {
@@ -34,6 +37,11 @@ namespace Picaser.ViewModel
                 AlbumList = albums;
                 NotifyOfPropertyChange(() => AlbumList);
             });
+        }
+
+        public void OnSelectPhoto(object o)
+        {
+            
         }
     }
 }

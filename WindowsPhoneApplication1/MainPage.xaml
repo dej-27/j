@@ -9,15 +9,17 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:ccc="clr-namespace:WindowsPhoneApplication1.Converters"   
     
+  
+    
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">    
-    
+    shell:SystemTray.IsVisible="True">
+
     <phone:PhoneApplicationPage.Resources>
-        <ccc:TestConverter x:Key="testC" />   
+        <ccc:TestConverter x:Key="testC" />
 
     </phone:PhoneApplicationPage.Resources>
 
@@ -44,9 +46,12 @@
                             <Border Background="Gray">
                                 <TextBlock Text="{Binding Name}" FontSize="50"  />
                             </Border>
-                            
-                            
-                            <ListBox ItemsSource="{Binding Pictures}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Disabled" SelectionChanged="ListBox_SelectionChanged">
+
+                            <ListBox ItemsSource="{Binding Pictures}" 
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"                                     
+                                     SelectionChanged="ListBox_SelectionChanged"
+                                     >
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <toolkit:WrapPanel IsItemsHost="True" />
@@ -58,27 +63,27 @@
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
-                           
+
                         </StackPanel>
-                       
-                       
+
+
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        
+
         </Grid>
     </Grid>
 
     <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
+    <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Button 1" Click="ApplicationBarIconButton_Click"/>
+            <!--<shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Button 2"/>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="MenuItem 1"/>
                 <shell:ApplicationBarMenuItem Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
+            </shell:ApplicationBar.MenuItems>-->
         </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

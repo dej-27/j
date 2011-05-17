@@ -36,7 +36,7 @@ namespace Picasa.Api
         const string ALBUM_DELETE_FEED = "https://picasaweb.google.com/data/entry/api/user/{0}/albumid/{1}";
 
         #region Authentication
-        
+
         /// <summary>
         /// Set authentication header to WebClient
         /// </summary>
@@ -179,7 +179,7 @@ namespace Picasa.Api
 
             SetAuthHeaders(client);
             client.Headers[HttpRequestHeader.IfNoneMatch] = Guid.NewGuid().ToString();
-            client.Headers["X-HTTP-Method-Override"] = "DELETE";            
+            client.Headers["X-HTTP-Method-Override"] = "DELETE";
 
             //TODO: add error handling
             client.UploadStringCompleted += (o, args) =>
@@ -231,6 +231,57 @@ namespace Picasa.Api
         public void UpdateAlbum(PicasaAlbum album, Action<string> callback)
         {
             throw new NotImplementedException();
+        }
+
+
+        public void UploadPhoto(string photoName, Stream photoStream, string albumId, Action<int> callback)
+        {
+            var url = GooglePicasaUrlHelper.UploadPhoto(ACCOUNT, albumId);
+            //var url = String.Format("https://picasaweb.google.com/data/feed/api/user/{0}/albumid/5606723136600202209", account);
+
+            WebClient client = new WebClient();
+            SetAuthHeaders(client);
+
+            client.Headers["Content-Type"] = "image/jpeg";
+            if (photoName != String.Empty)
+            {
+                client.Headers["Slug"] = photoName;
+            }
+
+            client.OpenWriteCompleted += (sender, args) =>
+            {               
+                byte[] buffer = new byte[4096];
+                int bytesRead;                
+
+                //int total = 0;
+                while ((bytesRead = photoStream.Read(buffer, 0, buffer.Length)) != 0)
+                {
+                    args.Result.Write(buffer, 0, bytesRead);
+                    //total += 4096 * 100 / (int)input.Length;
+                    //Debug.WriteLine(total);
+                }
+
+                //if (total < 100) total = 100;
+                //Debug.WriteLine(total);                
+                args.Result.Close();
+                photoStream.Close();
+            };
+
+            client.WriteStreamClosed += (o, args) =>
+            {
+                if (args.Error == null)
+                {
+                    callback(200);
+                    //MessageBox.Show("Upload completed!");
+                }
+                else
+                {
+                    callback(500);
+                    //MessageBox.Show("Upload Error");
+                }
+            };
+            client.OpenWriteAsync(url);
+
         }
 
         #endregion

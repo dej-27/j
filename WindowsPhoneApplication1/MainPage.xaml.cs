@@ -41,8 +41,8 @@ namespace WindowsPhoneApplication1
                               Pictures = album.Key.Pictures.ToList()
                           });
             lstBox1.ItemsSource = groups;
-            
-            
+
+
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -56,11 +56,7 @@ namespace WindowsPhoneApplication1
             GooglePicasaService service = new GooglePicasaService();
             service.Login(account, password, (authResult) =>
             {
-
                 WebClient client = new WebClient();
-
-
-                //client.UploadProgressChanged += new UploadProgressChangedEventHandler(client_UploadProgressChanged);
 
                 client.Headers["Authorization"] = String.Format("GoogleLogin auth={0}", authResult);
                 client.Headers["Content-Type"] = "image/jpeg";
@@ -70,16 +66,14 @@ namespace WindowsPhoneApplication1
                 Stream picStream = picure.GetImage();
 
                 UploadFile(client, picStream, account);
-
-
             });
         }
 
-    
+
 
         private void UploadFile(WebClient c, Stream data, string account)
         {
-            Debug.WriteLine("Upload file");
+            
 
             var url = String.Format("https://picasaweb.google.com/data/feed/api/user/{0}/albumid/5606723136600202209", account);
 
@@ -87,8 +81,22 @@ namespace WindowsPhoneApplication1
             {
                 PushData(data, e.Result);
                 e.Result.Close();
-                data.Close();
+                data.Close();                
+            };            
+          
+            c.WriteStreamClosed += (o, args) =>
+            {
+                if (args.Error == null)
+                {
+                    MessageBox.Show("Upload completed!");
+                }
+                else
+                {
+                    MessageBox.Show("Upload Error");
+                }
+               
             };
+            Console.WriteLine("123");
             c.OpenWriteAsync(new Uri(url));
         }
 
@@ -98,18 +106,24 @@ namespace WindowsPhoneApplication1
             byte[] buffer = new byte[4096];
             int bytesRead;
 
-            int total = 0;         
+            //int total = 0;
             while ((bytesRead = input.Read(buffer, 0, buffer.Length)) != 0)
             {
-                output.Write(buffer, 0, bytesRead);               
-                total += 4096 * 100 / (int)input.Length;
-
-                Debug.WriteLine(total);
+                output.Write(buffer, 0, bytesRead);
+                
+                //total += 4096 * 100 / (int)input.Length;
+                //Debug.WriteLine(total);
             }
 
-            if (total < 100) total = 100;
-            Debug.WriteLine(total);
+            //if (total < 100) total = 100;
+            //Debug.WriteLine(total);
         }
+
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
 
 

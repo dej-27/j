@@ -45,7 +45,7 @@ namespace Picaser.ViewModel
 
         public void UploadPhoto()
         {
-            _navigationService.Navigate(UrlHelper.PhonePhotoList());
+            _navigationService.Navigate(UrlHelper.PhonePhotoList(AlbumId));
         }
 
         public string AlbumId { get; set; }

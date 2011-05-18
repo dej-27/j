@@ -115,10 +115,8 @@
     <Compile Include="ViewModel\PhonePhotoListViewModel.cs" />
     <Compile Include="ViewModel\PicasaAlbumCreateViewModel.cs" />
     <Compile Include="ViewModel\PicasaAlbumListViewModel.cs" />
+    <Compile Include="ViewModel\PicasaGalleryViewModel.cs" />
     <Compile Include="ViewModel\PicasaPhotoListViewModel.cs" />
-    <Compile Include="View\PhonePhotoListView.xaml.cs">
-      <DependentUpon>PhonePhotoListView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -168,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PicasaAlbumUpdateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PicasaGalleryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

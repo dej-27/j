@@ -14,10 +14,6 @@
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True" Style="{StaticResource PageTransition}">
 
-   
-
-   
-
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -29,7 +25,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="PageTitle" Text="Новый" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -37,15 +33,13 @@
 
             <StackPanel>
 
-
-
-                <TextBlock Text="Google Account"  />
+                <TextBlock Text="Google пользователь"  />
                 <TextBox Text="{Binding Path=Account.User,Mode=TwoWay}" />
 
-                <TextBlock Text="Password"  />
+                <TextBlock Text="Пароль"  />
                 <PasswordBox Password="{Binding Path=Account.Password,Mode=TwoWay}"  />
 
-                <Button Content="Save">
+                <Button Content="Сохранить">
                     <!--<i:Interaction.Triggers>
                         <i:EventTrigger EventName="Click">
 
@@ -57,7 +51,6 @@
 
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
-
                 </Button>
 
 

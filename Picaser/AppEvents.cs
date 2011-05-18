@@ -15,21 +15,21 @@ namespace Picaser
     public class AppEvents
     {        
 
-        /// <summary>
-        /// New picasa album created
-        /// </summary>
-        public class PicasaAlbumCreated
-        {
-            public PicasaAlbum NewAlbum;
-        }
+        ///// <summary>
+        ///// New picasa album created
+        ///// </summary>
+        //public class PicasaAlbumCreated
+        //{
+        //    public PicasaAlbum NewAlbum;
+        //}
 
-        /// <summary>
-        /// Picasa album selected
-        /// </summary>
-        public class PicasaAlbumSelected
-        {
-            public PicasaAlbum SelectedAlbum;
-        }
+        ///// <summary>
+        ///// Picasa album selected
+        ///// </summary>
+        //public class PicasaAlbumSelected
+        //{
+        //    public PicasaAlbum SelectedAlbum;
+        //}
 
     }
 }

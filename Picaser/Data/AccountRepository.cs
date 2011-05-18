@@ -14,11 +14,10 @@ using Picaser.Common;
 namespace Picaser.Data
 {
     public class AccountRepository : IAccountRepository
-    {       
+    {
 
         public AccountRepository()
         {
-           
         }
 
         public void GetAllAccounts(Action<List<PicasaAccount>> callback)
@@ -26,7 +25,7 @@ namespace Picaser.Data
             var accounts = new List<PicasaAccount>();
             accounts.Add(new PicasaAccount() { User = "vasya.pupkin82xs12@googlemail.com", Password = "vasya.pupkin123" });
             accounts.Add(new PicasaAccount() { User = "vasya.pupkin11mx98@googlemail.com", Password = "vasya.pupkin123" });
-            accounts.Add(new PicasaAccount() { User = "vasya.pupkin42n11@googlemail.com", Password = "vasya.pupkin123" });
+            /*accounts.Add(new PicasaAccount() { User = "vasya.pupkin42n11@googlemail.com", Password = "vasya.pupkin123" });  //for ui test */
             callback(accounts);
         }
 

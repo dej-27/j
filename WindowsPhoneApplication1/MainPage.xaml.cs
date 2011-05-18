@@ -42,7 +42,6 @@ namespace WindowsPhoneApplication1
                           });
             lstBox1.ItemsSource = groups;
 
-
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

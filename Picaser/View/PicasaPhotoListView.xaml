@@ -31,7 +31,14 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <ListBox ItemsSource="{Binding PhotoList}" ItemContainerStyle="{StaticResource ListBoxItemStyle}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="1" Margin="12,0,12,0" HorizontalAlignment="Center">
+        <ListBox ItemsSource="{Binding PhotoList}" 
+                 ItemContainerStyle="{StaticResource ListBoxItemStyle}" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 Grid.Row="1" HorizontalAlignment="Stretch"
+                 caliburn:Message.Attach="[SelectionChanged] = [OnSelectPhoto($dataContext)]"
+                 SelectedItem="{Binding SelectedPhoto, Mode=TwoWay}"
+                 
+                 >
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <toolkit:WrapPanel IsItemsHost="True" />

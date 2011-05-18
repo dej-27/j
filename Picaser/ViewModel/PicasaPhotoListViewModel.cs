@@ -19,6 +19,10 @@ namespace Picaser.ViewModel
     {
         readonly IPhotoService<PicasaAlbum, PicasaMediaGroup> _photoService;
         readonly INavigationService _navigationService;
+        public string AlbumId { get; set; }
+        public string AlbumTitle { get; set; }
+        public PicasaMediaGroup SelectedPhoto { get; set; }
+        public List<PicasaMediaGroup> PhotoList { get; set; }
 
         public PicasaPhotoListViewModel(IPhotoService<PicasaAlbum, PicasaMediaGroup> photoService,
                                         INavigationService navigationService)
@@ -32,7 +36,7 @@ namespace Picaser.ViewModel
             base.OnActivate();
 
             //set album title
-            NotifyOfPropertyChange(() => AlbumTitle);
+            NotifyOfPropertyChange(() => AlbumTitle);            
             
             //load photos by albumId
             _photoService.GetAlbumPhotos(AlbumId, (photos) =>
@@ -40,7 +44,6 @@ namespace Picaser.ViewModel
                 PhotoList = photos;
                 NotifyOfPropertyChange(() => PhotoList);
             });
-
         }
 
         public void UploadPhoto()
@@ -48,9 +51,13 @@ namespace Picaser.ViewModel
             _navigationService.Navigate(UrlHelper.PhonePhotoList(AlbumId));
         }
 
-        public string AlbumId { get; set; }
-        public string AlbumTitle { get; set; }
-        public List<PicasaMediaGroup> PhotoList { get; set; }
-
+        public void OnSelectPhoto(PicasaPhotoListViewModel model)
+        {
+            if (model != null && model.SelectedPhoto != null)
+            {
+                int photoIndex = PhotoList.IndexOf(SelectedPhoto);
+                _navigationService.Navigate(UrlHelper.PicasaGallery(AlbumId, photoIndex));
+            }          
+        }
     }
 }

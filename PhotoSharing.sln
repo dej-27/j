@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoSharing", "PhotoSharing\PhotoSharing.csproj", "{AB96B78C-FD2F-46C0-A5A2-F15CAB8323B7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Picasa.Api", "Picasa.Api\Picasa.Api.csproj", "{5FCA765F-2767-481D-BF1D-0A704AE074DA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Phone.Api", "Phone.Api\Phone.Api.csproj", "{D848D403-43EE-4B0C-A73E-59A614241B2C}"
@@ -19,12 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AB96B78C-FD2F-46C0-A5A2-F15CAB8323B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AB96B78C-FD2F-46C0-A5A2-F15CAB8323B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AB96B78C-FD2F-46C0-A5A2-F15CAB8323B7}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{AB96B78C-FD2F-46C0-A5A2-F15CAB8323B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AB96B78C-FD2F-46C0-A5A2-F15CAB8323B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AB96B78C-FD2F-46C0-A5A2-F15CAB8323B7}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{5FCA765F-2767-481D-BF1D-0A704AE074DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FCA765F-2767-481D-BF1D-0A704AE074DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FCA765F-2767-481D-BF1D-0A704AE074DA}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -18,6 +18,5 @@ namespace Picaser.Common
         void GetAllAccounts(Action<List<PicasaAccount>> callback);
         void Add(PicasaAccount account);
         void Delete(PicasaAccount account);
-        void Update(PicasaAccount account);
     }
 }

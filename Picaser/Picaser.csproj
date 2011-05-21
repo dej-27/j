@@ -73,6 +73,7 @@
       <HintPath>..\packages\Caliburn.Micro.1.0.0\lib\SL40-wp\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">

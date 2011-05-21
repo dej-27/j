@@ -8,6 +8,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:caliburn="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
+    
+    
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
@@ -39,16 +43,12 @@
                 <TextBlock Text="Пароль"  />
                 <PasswordBox Password="{Binding Path=Account.Password,Mode=TwoWay}"  />
 
-                <Button Content="Сохранить">
+                <Button Content="Сохранить" caliburn:Message.Attach="[Click]=[SaveAccount($dataContext)]">
                     <!--<i:Interaction.Triggers>
-                        <i:EventTrigger EventName="Click">
-
-                            <cmd:EventToCommand 
-                                Command="{Binding NewAccountCommand}" 
-                                CommandParameter="{Binding Path=Account}" />
-
-                           
-
+                        <i:EventTrigger EventName="Click">                           
+                            <caliburn:ActionMessage MethodName="">
+                                
+                            </caliburn:ActionMessage>
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
                 </Button>

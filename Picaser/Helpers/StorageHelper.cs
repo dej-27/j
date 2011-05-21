@@ -11,27 +11,47 @@ using System.Windows.Shapes;
 using System.IO.IsolatedStorage;
 using System.IO;
 using System.Xml;
+using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Picaser.Helpers
 {
     public class StorageHelper
     {
-        public StorageHelper()
-        {
-            using (var appStorage = IsolatedStorageFile.GetUserStoreForApplication())
-            {
-                if (appStorage.FileExists("test.xml"))
-                {
 
-                    using (var file = appStorage.OpenFile("test.xml", FileMode.OpenOrCreate))
+        public static List<T> GetList<T>()
+        {
+            var filePath = String.Format("{0}List.xml", typeof(T));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+
+            using (var storage = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                if (storage.FileExists(filePath))
+                {
+                    using (var fileStream = storage.OpenFile(filePath, FileMode.Open))
                     {
-                        var reader = XmlReader.Create(file);
+                        return (List<T>)serializer.Deserialize(fileStream);
                     }
                 }
             }
+
+            return new List<T>();
         }
 
 
+        public static void SaveList<T>(List<T> list)
+        {
+            var filePath = String.Format("{0}List.xml", typeof(T));
+            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+
+            using (var storage = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                using (var fileStream = storage.OpenFile(filePath,FileMode.OpenOrCreate))
+                {
+                    serializer.Serialize(fileStream, list);
+                }                
+            }
+        }
 
 
     }

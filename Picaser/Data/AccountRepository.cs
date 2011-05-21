@@ -10,40 +10,40 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using Picaser.Common;
+using Picaser.Helpers;
 
 namespace Picaser.Data
 {
     public class AccountRepository : IAccountRepository
     {
 
-        public AccountRepository()
-        {
-        }
 
         public void GetAllAccounts(Action<List<PicasaAccount>> callback)
         {
-            var accounts = new List<PicasaAccount>();
-            accounts.Add(new PicasaAccount() { User = "vasya.pupkin82xs12@googlemail.com", Password = "vasya.pupkin123" });
-            accounts.Add(new PicasaAccount() { User = "vasya.pupkin11mx98@googlemail.com", Password = "vasya.pupkin123" });
-            /*accounts.Add(new PicasaAccount() { User = "vasya.pupkin42n11@googlemail.com", Password = "vasya.pupkin123" });  //for ui test */
-            callback(accounts);
+            var list = StorageHelper.GetList<PicasaAccount>();
+
+            //TODO: Remove later
+            if (list.Count == 0)
+            {
+                list.Add(new PicasaAccount() { User = "vasya.pupkin82xs12@googlemail.com", Password = "vasya.pupkin123" });
+                list.Add(new PicasaAccount() { User = "vasya.pupkin11mx98@googlemail.com", Password = "vasya.pupkin123" });
+                list.Add(new PicasaAccount() { User = "vasya.pupkin42n11@googlemail.com", Password = "vasya.pupkin123" });  //for ui test */
+            }
+            callback(list);         
         }
 
         public void Add(PicasaAccount account)
         {
-            MessageBox.Show("AccountRepository Add");
+            var list = StorageHelper.GetList<PicasaAccount>();
+            list.Add(account);
+            StorageHelper.SaveList<PicasaAccount>(list);
         }
 
         public void Delete(PicasaAccount account)
         {
-            MessageBox.Show("AccountRepository Delete");            
+            var list = StorageHelper.GetList<PicasaAccount>();
+            list.Remove(account);
+            StorageHelper.SaveList<PicasaAccount>(list);
         }
-
-        public void Update(PicasaAccount account)
-        {
-            MessageBox.Show("AccountRepository Update");            
-        }
-
-      
     }
 }

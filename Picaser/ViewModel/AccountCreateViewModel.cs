@@ -15,14 +15,14 @@ namespace Picaser.ViewModel
 {
     public class AccountCreateViewModel : Screen
     {
-        readonly IAccountRepository _accountRepository;
+        readonly IStorage<PicasaAccount> _accountStorage;
         readonly INavigationService _navigationService;
         public PicasaAccount Account { get; set; }
 
-        public AccountCreateViewModel(IAccountRepository accountRepository,
+        public AccountCreateViewModel(IStorage<PicasaAccount> accountStorage,
                                       INavigationService navigationService)
         {
-            _accountRepository = accountRepository;
+            _accountStorage = accountStorage;
             _navigationService = navigationService;
 
             Account = new PicasaAccount();
@@ -33,7 +33,14 @@ namespace Picaser.ViewModel
             //TODO: add validation fields and picasa account on server
             if (model.Account != null)
             {
-                _accountRepository.Add(model.Account);
+                //_accountRepository.Add(model.Account);
+
+                var accountsList = _accountStorage.GetList();
+                accountsList.Add(model.Account);
+                _accountStorage.SaveList(accountsList);
+
+
+                
                 _navigationService.GoBack();
             }
         }

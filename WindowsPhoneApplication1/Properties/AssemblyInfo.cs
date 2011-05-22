@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WindowsPhoneApplication1")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("NOKIA")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("WindowsPhoneApplication1")]
-[assembly: AssemblyCopyright("Copyright © NOKIA 2011")]
+[assembly: AssemblyCopyright("Copyright ©")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

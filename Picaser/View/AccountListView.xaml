@@ -36,6 +36,8 @@
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="Пользователи" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            
+            <!--<Button Content="Test" caliburn:Message.Attach="[Click]=[Test()]" />-->
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -46,15 +48,14 @@
                  caliburn:Message.Attach="[SelectionChanged] = [OnSelectAccount($dataContext)]"
                  SelectedItem="{Binding SelectedAccount,Mode=TwoWay}">
             
-            <ListBox.ItemTemplate>
+            <ListBox.ItemTemplate>                
                 <DataTemplate>
                     <ListBoxItem>                        
                         <TextBlock Text="{Binding User}" FontSize="40" Padding="10" />
-                        
+
                         <toolkit:ContextMenuService.ContextMenu>
                             <toolkit:ContextMenu caliburn:Action.TargetWithoutContext="{Binding ElementName=Page,Path=DataContext}">                                
-                                <toolkit:MenuItem Header="Go to albums" caliburn:Message.Attach="[Event Click] = [Action Navigation_PicasaAlbumListView($dataContext)]" />
-                                <toolkit:MenuItem Header="Edit" caliburn:Message.Attach="[Event Click] = [Action UpdateAccount($dataContext)]" />
+                                <toolkit:MenuItem Header="Go to albums" caliburn:Message.Attach="[Event Click] = [Action Navigation_PicasaAlbumListView($dataContext)]" />                                
                                 <toolkit:Separator />
                                 <toolkit:MenuItem Header="Delete" caliburn:Message.Attach="[Event Click] = [Action DeleteAccount($dataContext)]" />
                                 <!--<toolkit:MenuItem Header="Edit" Click="MenuItem_Click" />
@@ -65,7 +66,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>          
         </ListBox>
-
+        
+        
         
 
     </Grid>

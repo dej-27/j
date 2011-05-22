@@ -24,7 +24,7 @@ namespace Picaser.Converters
                 string file_name = url.Split('/').Last();
                 return url.Replace(file_name, String.Format("{0}/{1}", parameter, file_name));
             }
-            return null;            
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

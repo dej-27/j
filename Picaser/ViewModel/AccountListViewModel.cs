@@ -13,23 +13,24 @@ using Caliburn.Micro;
 using Picaser.Common;
 using Picasa.Api;
 using Picaser.Helpers;
+using System.Linq;
 
 namespace Picaser.ViewModel
 {
     public class AccountListViewModel : Screen
     {
-        readonly IAccountRepository _accountRepository;
+        readonly IStorage<PicasaAccount> _accountStorage;
         readonly INavigationService _navigationService;
         readonly IPhotoService<PicasaAlbum, PicasaMediaGroup> _photoService;
 
         public PicasaAccount SelectedAccount { get; set; }
         public List<PicasaAccount> AccountList { get; set; }
 
-        public AccountListViewModel(IAccountRepository accountRepository,
+        public AccountListViewModel(IStorage<PicasaAccount> accountStorage,
                                     INavigationService navigationService,
                                     IPhotoService<PicasaAlbum, PicasaMediaGroup> photoService)
         {
-            _accountRepository = accountRepository;
+            _accountStorage = accountStorage;
             _navigationService = navigationService;
             _photoService = photoService;            
         }
@@ -38,12 +39,9 @@ namespace Picaser.ViewModel
         {
             base.OnActivate();
 
-            _accountRepository.GetAllAccounts((accounts) =>
-           {
-               AccountList = accounts;
-               NotifyOfPropertyChange(() => AccountList);
-           });
-
+            //load account list
+            AccountList = _accountStorage.GetList();
+            NotifyOfPropertyChange(() => AccountList);
         }
         
 
@@ -62,12 +60,8 @@ namespace Picaser.ViewModel
         public void Navigation_AccountCreateView()
         {
             _navigationService.Navigate(UrlHelper.AccountCreate());
-        }
+        }       
 
-        public void UpdateAccount(PicasaAccount account)
-        {
-            MessageBox.Show("Update: Not implemented");
-        }
 
         public void DeleteAccount(PicasaAccount account)
         {
@@ -76,7 +70,10 @@ namespace Picaser.ViewModel
 
             if (result == MessageBoxResult.OK)
             {
-                MessageBox.Show("Delete: Not implemented");
+                AccountList.Remove(account);
+                _accountStorage.SaveList(AccountList);
+                AccountList = new List<PicasaAccount>(AccountList);
+                NotifyOfPropertyChange(() => AccountList);
             }
         }
 

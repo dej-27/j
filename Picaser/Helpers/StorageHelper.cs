@@ -19,38 +19,101 @@ namespace Picaser.Helpers
     public class StorageHelper
     {
 
-        public static List<T> GetList<T>()
+        private IsolatedStorageFile _storageFile;
+        public IsolatedStorageFile StorageFile
+        {
+            get
+            {
+                if (_storageFile == null)
+                {
+                    _storageFile = IsolatedStorageFile.GetUserStoreForApplication();
+                }
+                return _storageFile;
+            }
+        }
+
+
+
+        public List<T> GetList<T>()
         {
             var filePath = String.Format("{0}List.xml", typeof(T));
-            XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+            var serializer = new XmlSerializer(typeof(List<T>));
 
-            using (var storage = IsolatedStorageFile.GetUserStoreForApplication())
+            //using (var storage = IsolatedStorageFile.GetUserStoreForApplication())
+            //{
+            //    if (storage.FileExists(filePath))
+            //    {
+            //        using (var fileStream = storage.OpenFile(filePath, FileMode.Open))
+            //        {
+            //            using (var xmlReader = XmlReader.Create(fileStream))
+            //            {
+            //                return (List<T>)serializer.Deserialize(xmlReader);
+            //            }
+            //        }
+            //    }
+            //}
+
+
+            
+            
+
+            if (StorageFile.FileExists(filePath))
             {
-                if (storage.FileExists(filePath))
+                using (var fileStream = new IsolatedStorageFileStream(filePath, FileMode.Open, this.StorageFile))
                 {
-                    using (var fileStream = storage.OpenFile(filePath, FileMode.Open))
-                    {
-                        return (List<T>)serializer.Deserialize(fileStream);
-                    }
+                    return (List<T>)serializer.Deserialize(fileStream);
                 }
             }
+
+            //using (var storage = IsolatedStorageFile.GetUserStoreForApplication())
+            //{
+            //    if (storage.FileExists(filePath))
+            //    {
+            //        using (var fileStream = storage.OpenFile(filePath, FileMode.Open))
+            //        {
+            //            using (var xmlReader = XmlReader.Create(fileStream))
+            //            {
+            //                return (List<T>)serializer.Deserialize(xmlReader);
+            //            }
+            //        }
+            //    }
+            //}
+
+
 
             return new List<T>();
         }
 
 
-        public static void SaveList<T>(List<T> list)
+        public void SaveList<T>(List<T> list)
         {
             var filePath = String.Format("{0}List.xml", typeof(T));
             XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
 
-            using (var storage = IsolatedStorageFile.GetUserStoreForApplication())
+
+            //using (var storage = IsolatedStorageFile.GetUserStoreForApplication())
+            //{
+            //    using (var fileStream = storage.OpenFile(filePath, FileMode.OpenOrCreate))
+            //    {
+            //        using (var xmlWriter = XmlWriter.Create(fileStream))
+            //        {
+            //            serializer.Serialize(xmlWriter, list);
+            //        }
+            //    }
+            //}
+
+
+            if (StorageFile.FileExists(filePath))
             {
-                using (var fileStream = storage.OpenFile(filePath,FileMode.OpenOrCreate))
+                using (var fileStream = new IsolatedStorageFileStream(filePath, FileMode.OpenOrCreate, this.StorageFile))
                 {
                     serializer.Serialize(fileStream, list);
-                }                
+                }
             }
+
+
+
+
         }
 
 

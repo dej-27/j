@@ -11,39 +11,45 @@ using System.Windows.Shapes;
 using System.Collections.Generic;
 using Picaser.Common;
 using Picaser.Helpers;
+using System.Linq;
 
 namespace Picaser.Data
 {
     public class AccountRepository : IAccountRepository
     {
-
+        StorageHelper storageHelper = new StorageHelper();
 
         public void GetAllAccounts(Action<List<PicasaAccount>> callback)
         {
-            var list = StorageHelper.GetList<PicasaAccount>();
+            var list = storageHelper.GetList<PicasaAccount>();
 
             //TODO: Remove later
             if (list.Count == 0)
             {
-                list.Add(new PicasaAccount() { User = "vasya.pupkin82xs12@googlemail.com", Password = "vasya.pupkin123" });
-                list.Add(new PicasaAccount() { User = "vasya.pupkin11mx98@googlemail.com", Password = "vasya.pupkin123" });
-                list.Add(new PicasaAccount() { User = "vasya.pupkin42n11@googlemail.com", Password = "vasya.pupkin123" });  //for ui test */
+                //list.Add(new PicasaAccount() { User = "vasya.pupkin82xs12@googlemail.com", Password = "vasya.pupkin123" });
+                //list.Add(new PicasaAccount() { User = "vasya.pupkin11mx98@googlemail.com", Password = "vasya.pupkin123" });
+                //list.Add(new PicasaAccount() { User = "vasya.pupkin42n11@googlemail.com", Password = "vasya.pupkin123" });  //for ui test */
             }
             callback(list);         
         }
 
         public void Add(PicasaAccount account)
         {
-            var list = StorageHelper.GetList<PicasaAccount>();
+            var list = storageHelper.GetList<PicasaAccount>();
             list.Add(account);
-            StorageHelper.SaveList<PicasaAccount>(list);
+            storageHelper.SaveList<PicasaAccount>(list);
         }
 
         public void Delete(PicasaAccount account)
         {
-            var list = StorageHelper.GetList<PicasaAccount>();
-            list.Remove(account);
-            StorageHelper.SaveList<PicasaAccount>(list);
+            var list = storageHelper.GetList<PicasaAccount>();
+
+            var storageAccount = list.SingleOrDefault(a => a.User == account.User);
+            if (storageAccount != null)
+            {
+                list.Remove(storageAccount);
+            }
+            storageHelper.SaveList<PicasaAccount>(list);
         }
     }
 }

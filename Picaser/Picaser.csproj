@@ -84,6 +84,8 @@
     <Compile Include="Converters\PhonePictureConverter.cs" />
     <Compile Include="Converters\PicasaResizeConverter.cs" />
     <Compile Include="Data\AccountRepository.cs" />
+    <Compile Include="Data\AccountStorage.cs" />
+    <Compile Include="Data\Storage.cs" />
     <Compile Include="Helpers\StorageHelper.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="PhoneContainer.cs" />

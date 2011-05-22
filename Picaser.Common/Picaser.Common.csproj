@@ -55,6 +55,7 @@
     <Compile Include="IAccountRepository.cs" />
     <Compile Include="IPhoneService.cs" />
     <Compile Include="IPhotoService.cs" />
+    <Compile Include="IStorage.cs" />
     <Compile Include="PhoneAlbum.cs" />
     <Compile Include="PicasaAccount.cs" />
     <Compile Include="PicasaAlbum.cs" />

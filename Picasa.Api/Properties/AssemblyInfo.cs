@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Picasa.Api")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("NOKIA")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Picasa.Api")]
-[assembly: AssemblyCopyright("Copyright © NOKIA 2011")]
+[assembly: AssemblyCopyright("Copyright ©")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
